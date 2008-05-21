@@ -55,11 +55,11 @@ interface.
 
 Most L<DBIx::Class> methods like C<set_column>, C<set_columns>, C<get_column>,
 C<get_columns>, C<column_info>, ... will work with regular as well as 
-virtual column.
+virtual columns.
 
 =head1 METHODS
 
-=head3 add_virtual_columns 
+=head2 add_virtual_columns 
 
 Adds virtual columns to the result source. If supplied key => hashref pairs,
 uses the hashref as the column_info for that column. Repeated calls of this 
@@ -116,7 +116,15 @@ sub add_virtual_columns {
     }
 }
 
-=head3 has_any_column
+=head2 add_virtual_column
+
+Shortcut for L<add_virtual_columns>
+
+=cut
+
+sub add_virtual_column { shift->add_virtual_columns(@_) }
+
+=head2 has_any_column
 
 Returns true if the source has a virtual or regular column of this name, 
 false otherwise.
@@ -130,7 +138,7 @@ sub has_any_column {
         $self->has_column($column) ? 1:0;
 }
 
-=head3 has_virtual_column
+=head2 has_virtual_column
 
 Returns true if the source has a virtual column of this name, false otherwise.
 
@@ -142,16 +150,7 @@ sub has_virtual_column {
     return (exists $self->_virtual_columns->{$column}) ? 1:0
 }
 
-=head3 add_virtual_column
-
-Shortcut for L<add_virtual_columns>
-
-=cut
-
-sub add_virtual_column { shift->add_virtual_columns(@_) }
-
-
-=head3 remove_virtual_columns
+=head2 remove_virtual_columns
 
   $table->remove_columns(qw/col1 col2 col3/);
   
@@ -168,7 +167,7 @@ sub remove_virtual_columns {
     }
 }
 
-=head3 remove_virtual_column
+=head2 remove_virtual_column
 
 Shortcut for L<remove_virtual_column>
 
@@ -197,7 +196,7 @@ sub _virtual_filter {
     return ($virtual_attrs,$main_attrs);
 }
 
-=head3 new
+=head2 new
 
 Overloaded method. L<DBIx::Class::Row#new>
 
@@ -223,9 +222,7 @@ sub new {
     return $return;
 }
 
-
-
-=head3 get_column
+=head2 get_column
 
 Overloaded method. L<DBIx::Class::Row#get_colum>
 
@@ -243,7 +240,7 @@ sub get_column {
     return $self->next::method($column);
 }
 
-=head3 get_columns
+=head2 get_columns
 
 Overloaded method. L<DBIx::Class::Row#get_colums>
 
@@ -263,7 +260,7 @@ sub get_columns {
     return %data;
 }
 
-=head3 store_column
+=head2 store_column
 
 Overloaded method. L<DBIx::Class::Row#store_column>
 
@@ -359,11 +356,17 @@ notified of progress on your bug as I make changes.
     Maroš Kollár
     CPAN ID: MAROS
     maros [at] k-1.com
-    http://www.k-1.com
+    L<http://www.revdev.at>
+
+=head1 ACKNOWLEDGEMENTS 
+
+This module was written for Revdev L<http://www.revdev.at>, a nice litte
+software company I run with Koki and Domm (L<http://search.cpan.org/~domm/>).
 
 =head1 COPYRIGHT
 
-DBIx::Class::VirtualColumns is Copyright (c) 2008 Maroš Kollár.
+DBIx::Class::VirtualColumns is Copyright (c) 2008 Maroš Kollár 
+- L<http://www.revdev.at>
 
 This program is free software; you can redistribute it and/or modify it under 
 the same terms as Perl itself.
