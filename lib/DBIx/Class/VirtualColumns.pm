@@ -6,7 +6,7 @@ use warnings;
 
 use base qw(DBIx::Class);
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 __PACKAGE__->mk_classdata('_virtual_columns');
 
@@ -91,7 +91,8 @@ sub add_virtual_columns {
     my $self = shift;
     my @columns = @_;
     
-    $self->_virtual_columns() // $self->_virtual_columns( {} ) ;
+    $self->_virtual_columns( {} ) 
+        unless defined $self->_virtual_columns() ;
     
     # Add columns & accessors
     while (my $column = shift @columns) {
@@ -152,7 +153,7 @@ sub has_virtual_column {
 
 =head2 remove_virtual_columns
 
-  $table->remove_columns(qw/col1 col2 col3/);
+ $table->remove_columns(qw/col1 col2 col3/);
   
 Removes virtual columns from the result source.
 
@@ -187,7 +188,7 @@ sub _virtual_filter {
     my $virtual_attrs = {};
     my $main_attrs = {};
     foreach my $attr (keys %$attrs) {
-        if ($attr ~~ $self->_virtual_columns) {
+        if (exists $self->_virtual_columns->{$attr}) {
             $virtual_attrs->{$attr} = $attrs->{$attr};
         } else {
             $main_attrs->{$attr} = $attrs->{$attr};

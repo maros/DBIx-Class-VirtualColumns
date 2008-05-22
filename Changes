@@ -2,5 +2,6 @@ Revision history for Perl module DBIx::Class::VirtualColumns
 
 1.00 Wed May 21 2008
     - original version
-
+1.01 Wed May 21 2008
+    - Removed Perl 5.10 operators (now also works with < 5.10)
     
