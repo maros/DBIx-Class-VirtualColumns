@@ -12,7 +12,7 @@ BEGIN {
     eval "use DBD::SQLite";
     plan $@
         ? ( skip_all => 'needs DBD::SQLite for testing' )
-        : ( tests => 29 );
+        : ( tests => 30 );
 }
 
 use lib qw(t/lib);
@@ -53,6 +53,7 @@ is($newitem->vcol2,'VTest2.2');
 
 is($newitem->column_info('vcol1')->{virtual},1);
 is($newitem->column_info('name')->{virtual},0);
+is($newitem->column_info('name')->{data_type},'varchar');
 is($newitem->column_info('vcol3')->{virtual},1);
 is($newitem->column_info('vcol3')->{accessor},'vcol3accessor');
 
