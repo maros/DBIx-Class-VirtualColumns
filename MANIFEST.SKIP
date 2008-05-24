@@ -46,6 +46,3 @@ DBIx-Class-VirtualColumns-*.*.tar.gz
 \B\.DS_Store
 #   Mac OSX SMB mount metadata files
 \B\._
-# Avoid archives of this distribution
-\bBabilu-[\d\.\_]+
-\bbabilu_local.pl+
