@@ -10,6 +10,8 @@ our $VERSION = '1.01';
 
 __PACKAGE__->mk_classdata('_virtual_columns');
 
+=encoding utf8
+
 =head1 NAME
 
 DBIx::Class::VirtualColumns - Add virtual columns to DBIx::Class schemata
@@ -199,7 +201,7 @@ sub _virtual_filter {
 
 =head2 new
 
-Overloaded method. L<DBIx::Class::Row#new>
+Overloaded method. L<DBIx::Class::Row/"new"">
 
 =cut
 
@@ -225,7 +227,7 @@ sub new {
 
 =head2 get_column
 
-Overloaded method. L<DBIx::Class::Row#get_colum>
+Overloaded method. L<DBIx::Class::Row/"get_colum">
 
 =cut
 
@@ -263,7 +265,7 @@ sub get_columns {
 
 =head2 store_column
 
-Overloaded method. L<DBIx::Class::Row#store_column>
+Overloaded method. L<DBIx::Class::Row/"store_column">
 
 =cut
 
@@ -281,7 +283,7 @@ sub store_column {
 
 =head2 set_column
 
-Overloaded method. L<DBIx::Class::Row#set_column>
+Overloaded method. L<DBIx::Class::Row/"set_column">
 
 =cut
 
@@ -297,7 +299,7 @@ sub set_column {
 
 =head2 column_info
 
-Overloaded method. L<DBIx::Class::ResultSource#column_info>
+Overloaded method. L<DBIx::Class::ResultSource/"column_info">
 
 Additionally returns the HASH key 'virtual' which indicates if the requested
 column is virtual or not.
@@ -323,7 +325,7 @@ sub column_info {
 
 =head2 update
 
-Overloaded method. L<DBIx::Class::Row#update>
+Overloaded method. L<DBIx::Class::Row/"update">
 
 =cut
 
@@ -349,8 +351,9 @@ sub update {
 
 Please report any bugs or feature requests to 
 C<bug-dbix-class-virtualcolumns@rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org>.  I will be notified, and then you'll automatically be 
-notified of progress on your bug as I make changes.
+L<http://rt.cpan.org/Public/Bug/Report.html?Queue=DBIx::Class::VirtualColumns>.
+I will be notified, and then you'll automatically be notified of progress on 
+your report as I make changes.
 
 =head1 AUTHOR
 
