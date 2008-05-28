@@ -12,7 +12,7 @@ BEGIN {
     eval "use DBD::SQLite";
     plan $@
         ? ( skip_all => 'needs DBD::SQLite for testing' )
-        : ( tests => 12 );
+        : ( tests => 17 );
 }
 
 use lib qw(t/lib);
@@ -27,22 +27,30 @@ my $source = $schema->resultset('Test1');
 
 
 VCTest::Schema::Test2->add_virtual_columns('test1');
-
+VCTest::Schema::Test2->add_virtual_columns('test3');
+VCTest::Schema::Test2->add_virtual_columns('test4');
 eval {
     VCTest::Schema::Test2->add_virtual_columns('test1');
 };
 like($@,qr/Cannot override existing column/);
 
 eval {
-    VCTest::Schema::Test2->add_virtual_columns('description');
+    VCTest::Schema::Test2->add_virtual_column('description');
 };
 like($@,qr/Cannot override existing column/);
 
 VCTest::Schema::Test2->add_virtual_columns('test2' => { accessor => 'hase', other => 'stuff'});
 
 is(VCTest::Schema::Test2->has_virtual_column('test2'),1);
+is(VCTest::Schema::Test2->has_virtual_column('test3'),1);
+is(VCTest::Schema::Test2->has_virtual_column('test4'),1);
+VCTest::Schema::Test2->remove_virtual_columns('test3');
+VCTest::Schema::Test2->remove_virtual_column('test4');
 is(VCTest::Schema::Test2->has_virtual_column('test3'),0);
-is(VCTest::Schema::Test2->has_any_column('test2'),1);
+is(VCTest::Schema::Test2->has_virtual_column('test4'),0);
+is(VCTest::Schema::Test2->has_virtual_column('test5'),0);
+is(VCTest::Schema::Test2->has_any_column('test5'),0);
+is(VCTest::Schema::Test2->has_any_column('test5'),0);
 is(VCTest::Schema::Test2->has_any_column('description'),1);
 
 my $info = VCTest::Schema::Test2->column_info('description');

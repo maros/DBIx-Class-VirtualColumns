@@ -6,7 +6,7 @@ use warnings;
 
 use base qw(DBIx::Class);
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 __PACKAGE__->mk_classdata('_virtual_columns');
 
@@ -31,22 +31,25 @@ DBIx::Class::VirtualColumns - Add virtual columns to DBIx::Class schemata
  );
  
  __PACKAGE__->table("sometable");
- __PACKAGE__->add_columns('dbcol1','dbcol2', ...);
- __PACKAGE__->add_virtual_columns(w/vcol1 vcol2 vcol3/);
+ __PACKAGE__->add_columns(qw/dbcol1 dbcol2/);
+ __PACKAGE__->add_virtual_columns(qw/vcol1 vcol2 vcol3/);
  
+ # =========================================================
  # Somewhere else
+ 
  my $item = $schema->resultset('Artist')->find($id);
- $item->vcol1('test'); # 
+ $item->vcol1('test'); # Set 'test'
  $item->get_column('vcol1'); # Return 'test'
  
  my $otheritem = $schema->resultset('Artist')->create({
-     dbcol1 => 'value',
-     dbcol2 => 'value',
-     vcol1  => 'value',
-     vcol2  => 'value',
+     dbcol1 => 'value1',
+     dbcol2 => 'value2',
+     vcol1  => 'value3',
+     vcol2  => 'value4',
  });
+ 
+ $otheritem->vcol1(); # Now is 'value3'
 
-  
 =head1 DESCRIPTION
 
 This module allows to specify 'virtual columns' in DBIx::Class schema
@@ -137,8 +140,8 @@ false otherwise.
 sub has_any_column {
     my $self = shift;
     my $column = shift;
-    return $self->_virtual_columns->{$column} || 
-        $self->has_column($column) ? 1:0;
+    return ($self->_virtual_columns->{$column} || 
+        $self->has_column($column)) ? 1:0;
 }
 
 =head2 has_virtual_column
@@ -172,7 +175,7 @@ sub remove_virtual_columns {
 
 =head2 remove_virtual_column
 
-Shortcut for L<remove_virtual_column>
+Shortcut for L<remove_virtual_columns>
 
 =cut
 
@@ -180,7 +183,7 @@ sub remove_virtual_column { shift->remove_virtual_columns(@_) }
 
 =head2 _virtual_filter
 
-Splits attributes for base and virtual columns
+Splits attributes for regular and virtual columns
 
 =cut
 
@@ -201,7 +204,7 @@ sub _virtual_filter {
 
 =head2 new
 
-Overloaded method. L<DBIx::Class::Row/"new"">
+Overloaded method. L<DBIx::Class::Row/"new">
 
 =cut
 
@@ -245,7 +248,7 @@ sub get_column {
 
 =head2 get_columns
 
-Overloaded method. L<DBIx::Class::Row#get_colums>
+Overloaded method. L<DBIx::Class::Row/"get_colums">
 
 =cut
 
@@ -380,4 +383,4 @@ LICENSE file included with this module.
 
 =cut
 
-"This ist virtually the end of the file";
+"This ist virtually the end of the package";
