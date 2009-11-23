@@ -1,6 +1,7 @@
 # Module Specific Stuff
 t/var/vctest.db
 DBIx-Class-VirtualColumns-*.*.tar.gz
+DBIx-Class-VirtualColumns-*.*/
 
 # Eclipse stuff
 .includepath

@@ -6,4 +6,5 @@ Revision history for Perl module DBIx::Class::VirtualColumns
     - Removed Perl 5.10 operators (now also works with < 5.10)
 1.02 Tue May 27 2008
     - Fixed typos and wrong formats in POD 
-    - Test coverage to 95.9%    
+    - Test coverage to 95.9%
+    - Fixed RT51801 (Reported and fixed by Doug Bell)

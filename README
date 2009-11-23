@@ -6,30 +6,34 @@ SYNOPSIS
      package Your::Schema::Class;
      use strict;
      use warnings;
-     
- use base 'DBIx::Class';
-     
- __PACKAGE__->load_components(
+ 
+     use base 'DBIx::Class';
+ 
+     __PACKAGE__->load_components(
        "VirtualColumns",
        "PK",
        "Core",
      );
-     
- __PACKAGE__->table("sometable");
-     __PACKAGE__->add_columns('dbcol1','dbcol2', ...);
-     __PACKAGE__->add_virtual_columns(w/vcol1 vcol2 vcol3/);
-     
- # Somewhere else
+ 
+     __PACKAGE__->table("sometable");
+     __PACKAGE__->add_columns(qw/dbcol1 dbcol2/);
+     __PACKAGE__->add_virtual_columns(qw/vcol1 vcol2 vcol3/);
+ 
+     # =========================================================
+     # Somewhere else
+ 
      my $item = $schema->resultset('Artist')->find($id);
-     $item->vcol1('test'); # 
+     $item->vcol1('test'); # Set 'test'
      $item->get_column('vcol1'); # Return 'test'
-     
- my $otheritem = $schema->resultset('Artist')->create({
-         dbcol1 => 'value',
-         dbcol2 => 'value',
-         vcol1  => 'value',
-         vcol2  => 'value',
+ 
+     my $otheritem = $schema->resultset('Artist')->create({
+         dbcol1 => 'value1',
+         dbcol2 => 'value2',
+         vcol1  => 'value3',
+         vcol2  => 'value4',
      });
+ 
+     $otheritem->vcol1(); # Now is 'value3'
 
 DESCRIPTION
     This module allows to specify 'virtual columns' in DBIx::Class schema
@@ -81,19 +85,19 @@ METHODS
     Removes virtual columns from the result source.
 
   remove_virtual_column
-    Shortcut for remove_virtual_column
+    Shortcut for remove_virtual_columns
 
   _virtual_filter
-    Splits attributes for base and virtual columns
+    Splits attributes for regular and virtual columns
 
   new
-    Overloaded method. "new"" in DBIx::Class::Row
+    Overloaded method. "new" in DBIx::Class::Row
 
   get_column
     Overloaded method. "get_colum" in DBIx::Class::Row
 
   get_columns
-    Overloaded method. DBIx::Class::Row#get_colums
+    Overloaded method. "get_colums" in DBIx::Class::Row
 
   store_column
     Overloaded method. "store_column" in DBIx::Class::Row

@@ -2,11 +2,15 @@
 use strict;
 use inc::Module::Install;
 
+my $from = 'lib/DBIx/Class/VirtualColumns.pm';
+
+perl_version    '5.006';
+
 # Define metadata
 name            'DBIx-Class-VirtualColumns';
-all_from        'lib/DBIx/Class/VirtualColumns.pm';
-
-perl_version    '5.000';
+all_from        $from;
+readme_from     $from;
+readme_markdown_from $from;
 
 # Specific dependencies
 requires        'DBIx::Class'           => 0;
