@@ -189,6 +189,10 @@ Splits attributes for regular and virtual columns
 
 sub _virtual_filter {
     my ($self,$attrs) = @_;  
+
+    if ( !$self->_virtual_columns ) {
+        $self->_virtual_columns( {} );
+    }
     
     my $virtual_attrs = {};
     my $main_attrs = {};
