@@ -6,7 +6,7 @@ use warnings;
 
 use base qw(DBIx::Class);
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 __PACKAGE__->mk_classdata('_virtual_columns');
 
