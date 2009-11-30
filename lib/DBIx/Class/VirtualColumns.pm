@@ -49,6 +49,9 @@ DBIx::Class::VirtualColumns - Add virtual columns to DBIx::Class schemata
  });
  
  $otheritem->vcol1(); # Now is 'value3'
+ 
+ # Get the column metadata just like for a regular DBIC column
+ my $info = $result_source->column_info('vcol1');
 
 =head1 DESCRIPTION
 
@@ -61,6 +64,17 @@ interface.
 Most L<DBIx::Class> methods like C<set_column>, C<set_columns>, C<get_column>,
 C<get_columns>, C<column_info>, ... will work with regular as well as 
 virtual columns.
+
+=head1 USAGE
+
+Use this module if you want to add 'virtual' columns to a DBIC class 
+which behave like real columns (e.g. if you want to use the C<set_column>, 
+C<get_column> methods)
+
+However if you only want to add non-column data to L<DBIx::Class::Row> 
+objects, then there are easier/better ways:
+
+ __PACKAGE__->mk_group_accessors(simple => qw(foo bar baz));
 
 =head1 METHODS
 
@@ -85,7 +99,7 @@ DBIx::Class::VirtualColumns:
 
 =item * accessor
 
-Use this to set the name of the accessor method for this column. If unset, 
+Use this to set the name of the accessor method for this column. If not set, 
 the name of the column will be used.
 
 =back
@@ -354,9 +368,22 @@ sub update {
     return $self;
 }
 
+=head1 CAVEATS
+
+The best way to add non-column data to DBIC objects is to use 
+L<Class::Accessor::Grouped>. 
+
+ __PACKAGE__->mk_group_accessors(simple => qw(foo bar baz));
+
+Use L<DBIx::Class::VirtualColumns> only if you rely on L<DBIx::Class::Row> 
+methods like C<set_column>, C<get_column>, ... 
+
 =head1 SUPPORT
 
-Please report any bugs or feature requests to 
+This module was just a proof of concept, and is not actively developed 
+anymore. Patches are still welcome though.
+
+Please report any bugs to 
 C<bug-dbix-class-virtualcolumns@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org/Public/Bug/Report.html?Queue=DBIx::Class::VirtualColumns>.
 I will be notified, and then you'll automatically be notified of progress on 
